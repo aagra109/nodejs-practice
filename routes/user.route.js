@@ -14,7 +14,13 @@ const router = express.Router();
  * @swagger
  * tags:
  *   - name: Users
- *     description: User management
+ *     description: User management operations
+ *   - name: Users.Create
+ *     description: Operations related to creating users
+ *   - name: Users.Update
+ *     description: Operations related to updating users
+ *   - name: Users.Delete
+ *     description: Operations related to deleting users
  */
 
 /**
@@ -63,7 +69,7 @@ router.get("/users/:id", getUser);
  * /api/users:
  *   post:
  *     summary: Create a new user
- *     tags: [Users]
+ *     tags: [Users.Create]
  *     requestBody:
  *       required: true
  *       content:
@@ -86,7 +92,7 @@ router.post("/users", validateUserSchema, createUser);
  * /api/users/{id}:
  *   put:
  *     summary: Update an existing user
- *     tags: [Users]
+ *     tags: [Users.Update]
  *     parameters:
  *       - in: path
  *         name: id
@@ -120,7 +126,7 @@ router.put("/users/:id", updateUser);
  * /api/users/{id}:
  *   delete:
  *     summary: Delete a user
- *     tags: [Users]
+ *     tags: [Users.Delete]
  *     parameters:
  *       - in: path
  *         name: id
