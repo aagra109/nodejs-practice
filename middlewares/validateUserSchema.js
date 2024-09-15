@@ -1,9 +1,9 @@
-const Ajv = require("ajv");
-const userSchema = require("../schemas/user.schema");
+import Ajv from "ajv";
+import userSchema from "../schemas/user.schema.js";
 
 const ajv = new Ajv();
 
-const validateUserSchema = (req, res, next) => {
+export const validateUserSchema = (req, res, next) => {
   const validate = ajv.compile(userSchema);
   const valid = validate(req.body);
 
@@ -12,5 +12,3 @@ const validateUserSchema = (req, res, next) => {
   }
   next();
 };
-
-module.exports = validateUserSchema;

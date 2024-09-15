@@ -1,13 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const {
+import express from "express";
+import {
   getUsers,
   getUser,
   createUser,
   updateUser,
   deleteUser,
-} = require("../controllers/user.controller");
-const validateUserSchema = require("../middlewares/validateUserSchema");
+} from "../controllers/user.controller.js";
+import { validateUserSchema } from "../middlewares/validateUserSchema.js";
+
+const router = express.Router();
 
 router.get("/", getUsers);
 router.get("/:id", getUser);
@@ -15,4 +16,4 @@ router.post("/", validateUserSchema, createUser);
 router.put("/:id", validateUserSchema, updateUser);
 router.delete("/:id", deleteUser);
 
-module.exports = router;
+export default router;

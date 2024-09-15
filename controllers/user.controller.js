@@ -1,15 +1,19 @@
-const User = require("../models/user.model");
+import User from "../models/user.model.js";
 
-const getUsers = async (req, res) => {
+export const getUsers = async (req, res) => {
   try {
-    const users = await User.find({});
-    res.status(200).json({ users });
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+    const users = await User.find({}).skip(skip).limit(limit);
+    const totalUsers = await User.countDocuments();
+    res.status(200).json({ users, totalUsers: totalUsers });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-const getUser = async (req, res) => {
+export const getUser = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
@@ -19,7 +23,7 @@ const getUser = async (req, res) => {
   }
 };
 
-const createUser = async (req, res) => {
+export const createUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
     res.status(200).json({ user });
@@ -28,7 +32,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const updateUser = async (req, res) => {
+export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findByIdAndUpdate(id, req.body);
@@ -42,7 +46,7 @@ const updateUser = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findByIdAndDelete(id);
@@ -53,12 +57,4 @@ const deleteUser = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-};
-
-module.exports = {
-  getUsers,
-  getUser,
-  createUser,
-  updateUser,
-  deleteUser,
 };
