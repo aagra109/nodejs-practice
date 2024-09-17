@@ -8,6 +8,7 @@ import passport from "passport";
 import axios from "axios";
 import checkAccessToken from "./msalConfig.js";
 import logger from "./logger.js";
+import "./scheduler.js";
 
 dotenv.config();
 
