@@ -62,6 +62,8 @@ router.get("/users", getUsers);
  *               $ref: '#/components/schemas/User'
  *       404:
  *         description: User not found
+ *       500:
+ *        description: Server error
  */
 router.get("/users/:id", getUser);
 /**
