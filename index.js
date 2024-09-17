@@ -6,6 +6,8 @@ import setupSwagger from "./swagger.js";
 import setupAuth from "./auth.js";
 import passport from "passport";
 import axios from "axios";
+import checkAccessToken from "./msalConfig.js";
+import logger from "./logger.js";
 
 dotenv.config();
 
@@ -19,6 +21,7 @@ setupAuth(app);
 setupSwagger(app);
 
 app.get("/", (req, res) => {
+  logger.info("Hello from Node API");
   res.send("Hello from Node API");
 });
 
@@ -43,7 +46,7 @@ app.get(
   })
 );
 
-app.get("/dashboard", async (req, res) => {
+app.get("/dashboard", checkAccessToken, async (req, res) => {
   if (!req.isAuthenticated()) {
     return res.redirect("/login");
   }
@@ -66,7 +69,7 @@ app.get("/dashboard", async (req, res) => {
       profile: userProfile,
     });
   } catch (error) {
-    console.error(
+    logger.error(
       "Error fetching profile from Microsoft Graph:",
       error.response ? error.response.data : error.message
     );
@@ -82,11 +85,11 @@ const MONGO_URI = process.env.MONGO_URI;
 mongoose
   .connect(MONGO_URI)
   .then(() => {
-    console.log("Connected to MongoDB");
+    logger.info("Connected to MongoDB");
     app.listen(3000, () => {
-      console.log("Server is running on port 3000");
+      logger.info("Server is running on port 3000");
     });
   })
   .catch((error) => {
-    console.log("Error connecting to MongoDB:", error);
+    logger.error("Error connecting to MongoDB:", error);
   });
