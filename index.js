@@ -9,6 +9,7 @@ import axios from "axios";
 import checkAccessToken from "./msalConfig.js";
 import logger from "./logger.js";
 import "./scheduler.js";
+import movieRoute from "./routes/movie.route.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/api", userRoute);
+app.use("/movies", movieRoute);
 
 setupAuth(app);
 setupSwagger(app);
