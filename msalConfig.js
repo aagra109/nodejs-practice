@@ -5,12 +5,13 @@ import { getSecret } from "./keyVaultConfig.js";
 
 const clientID = await getSecret("AZURE-CLIENT-ID");
 const tenantID = await getSecret("AZURE-TENANT-ID");
+const clientSecret = await getSecret("AZURE-CLIENT-SECRET");
 
 const msalConfig = {
   auth: {
     clientId: clientID,
     authority: `https://login.microsoftonline.com/${tenantID}`,
-    clientSecret: process.env.AZURE_CLIENT_SECRET,
+    clientSecret: clientSecret,
   },
 };
 

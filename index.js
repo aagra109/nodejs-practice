@@ -10,6 +10,7 @@ import checkAccessToken from "./msalConfig.js";
 import logger from "./logger.js";
 import "./scheduler.js";
 import movieRoute from "./routes/movie.route.js";
+import { getConnection } from "./mssqlConfig.js";
 
 dotenv.config();
 
@@ -96,3 +97,15 @@ mongoose
   .catch((error) => {
     logger.error("Error connecting to MongoDB:", error);
   });
+
+const fetchData = async () => {
+  try {
+    const pool = await getConnection();
+    const result = await pool.request().query("SELECT 1 AS Number");
+    console.log(result.recordset);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
+fetchData();

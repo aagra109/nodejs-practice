@@ -26,6 +26,8 @@
     "mongodb": "^6.9.0",
     "mongoose": "^8.6.2",
     "msal": "^1.4.18",
+    "msnodesqlv8": "^4.2.1",
+    "mssql": "^11.0.1",
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.15",
     "passport": "^0.7.0",
