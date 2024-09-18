@@ -1,11 +1,15 @@
 import { ConfidentialClientApplication } from "@azure/msal-node";
 import jwt from "jsonwebtoken";
 import logger from "./logger.js";
+import { getSecret } from "./keyVaultConfig.js";
+
+const clientID = await getSecret("AZURE-CLIENT-ID");
+const tenantID = await getSecret("AZURE-TENANT-ID");
 
 const msalConfig = {
   auth: {
-    clientId: process.env.AZURE_CLIENT_ID,
-    authority: `https://login.microsoftonline.com/${process.env.AZURE_TENANT_ID}`,
+    clientId: clientID,
+    authority: `https://login.microsoftonline.com/${tenantID}`,
     clientSecret: process.env.AZURE_CLIENT_SECRET,
   },
 };
